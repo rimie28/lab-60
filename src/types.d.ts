@@ -11,4 +11,4 @@ export interface MessagesProps {
 
 export interface MyMessageProps {
   getMessages: () => void;
-};
+}
