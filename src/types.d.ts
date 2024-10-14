@@ -8,3 +8,7 @@ export interface Message {
 export interface MessagesProps {
   messages: Message[];
 }
+
+export interface MyMessageProps {
+  getMessages: () => void;
+};
