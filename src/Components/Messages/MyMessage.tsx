@@ -7,7 +7,7 @@ const MyMessage:React.FC<MyMessageProps> = ({getMessages}) => {
   const [message, setMessage] = useState('');
 
   const sendMessage = async () => {
-    const url = 'http://146.185.154.90:8000/messages'
+    const url = `http://146.185.154.90:8000/messages`
 
     const data = new URLSearchParams();
 
@@ -15,11 +15,13 @@ const MyMessage:React.FC<MyMessageProps> = ({getMessages}) => {
     data.set('author', author);
 
     try {
-      const response = await fetch(url, {
+      await fetch(url, {
         method: 'post',
         body: data,
       });
       setMessage('');
+      setAuthor('')
+
       getMessages()
     } catch (error) {
       console.error(error);
@@ -28,22 +30,28 @@ const MyMessage:React.FC<MyMessageProps> = ({getMessages}) => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    sendMessage();
+
+    if (message.trim() && author.trim()) {
+      sendMessage();
+    }
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="d-flex flex-column gap-2">
       <input
+        className="form-control"
         type="text"
         placeholder="Write your name:"
         value={author}
         onChange={e => setAuthor(e.target.value)}/>
       <input
+        className="form-control"
         type="text"
         placeholder="Message"
         value={message}
         onChange={e => setMessage(e.target.value)}/>
       <button
+        className="btn btn-primary"
         type="submit"
       >Send
       </button>
